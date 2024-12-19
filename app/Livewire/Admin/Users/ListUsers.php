@@ -177,6 +177,15 @@ class ListUsers extends Component
         $this->hobbies = array_values($this->hobbies); // Reindex the array
     }
 
+    //#########################order users#########################################
+
+    public function updateUserOrder($items){
+        foreach ($items as $item){
+            User::find($item['value'])->update(['order_position' => $item['order']]);
+        }
+        // $this->dispatch("hide-form", ['message' => 'User Updated Successfully']);
+    }
+
 
     // ############ Render #################################################################
     #[Layout('layouts.app')]
@@ -185,7 +194,7 @@ class ListUsers extends Component
         $users = User::query()
             ->where('name', 'like', '%' . $this->searchTerm . '%')
             ->orWhere('email', 'like', '%' . $this->searchTerm . '%')
-            ->latest()
+            ->orderBy('order_position','asc')
             ->paginate(5);
         return view('livewire.admin.users.list-users', compact('users'));
     }

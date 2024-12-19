@@ -52,6 +52,7 @@
             <table class="table">
               <thead>
                 <tr>
+                  <th></th>
                   <th>
                     <div class="icheck-primary d-inline ml-2">
                       <input wire:model.lazy='selectedPageRows' type="checkbox" name="todo2" id="checkbox">
@@ -65,9 +66,11 @@
                   <th></th>
                 </tr>
               </thead>
-              <tbody>
+
+              <tbody wire:sortable="updateUserOrder">
                 @foreach ($users as $user)
-                <tr>
+                <tr wire:sortable.item="{{ $user->id }}" wire:key="user-{{ $user->id }}">
+                  <td wire:sortable.handle style="cursor: move; width:10px;"><i class="bi bi-arrows-move text-muted"></i></td>
                   <th>
                     <div class="icheck-primary d-inline ml-2">
                       <input wire:model.lazy='selectedRows' type="checkbox" value="{{$user->id}}" name="todo2"
@@ -93,6 +96,7 @@
                 </tr>
                 @endforeach
               </tbody>
+
             </table>
             {{-- @dump($selectedRows) --}}
             <!-- End Default Table Example -->
@@ -250,3 +254,15 @@
 
 
 </div>
+
+@push('style')
+<style>
+  .draggable-mirror{
+    background-color: white;
+    width: 950px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+</style>
+@endpush

@@ -23,6 +23,7 @@ class User extends Authenticatable
         'password',
         'role_id',
         'hobbies',
+        'order_position',
     ];
 
     // protected $casts = [
